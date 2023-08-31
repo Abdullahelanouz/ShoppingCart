@@ -27,6 +27,11 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "products",
+    pattern: "/products/{categorySlug?}",
+    defaults: new { controller = "Products", action = "Index" });
+
 var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
 SeedData.SeedDatabase(context);
 

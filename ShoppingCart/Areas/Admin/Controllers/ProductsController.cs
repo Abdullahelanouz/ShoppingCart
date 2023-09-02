@@ -86,54 +86,54 @@ namespace ShoppingCart.Areas.Admin.Controllers
             return View(product);
         }
 
-        //public async Task<IActionResult> Edit(long id)
-        //{
-        //    Product product = await _context.Products.FindAsync(id);
+        public async Task<IActionResult> Edit(long id)
+        {
+            Product product = await _context.Products.FindAsync(id);
 
-        //    ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
 
-        //    return View(product);
-        //}
+            return View(product);
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, Product product)
-        //{
-        //    ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Product product)
+        {
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        product.Slug = product.Name.ToLower().Replace(" ", "-");
+            if (ModelState.IsValid)
+            {
+                product.Slug = product.Name.ToLower().Replace(" ", "-");
 
-        //        var slug = await _context.Products.FirstOrDefaultAsync(p => p.Slug == product.Slug);
-        //        if (slug != null)
-        //        {
-        //            ModelState.AddModelError("", "The product already exists.");
-        //            return View(product);
-        //        }
+                var slug = await _context.Products.FirstOrDefaultAsync(p => p.Slug == product.Slug);
+                if (slug != null)
+                {
+                    ModelState.AddModelError("", "The product already exists.");
+                    return View(product);
+                }
 
-        //        if (product.ImageUpload != null)
-        //        {
-        //            string uploadsDir = Path.Combine(_webHostEnvironment.WebRootPath, "media/products");
-        //            string imageName = Guid.NewGuid().ToString() + "_" + product.ImageUpload.FileName;
+                if (product.ImageUpload != null)
+                {
+                    string uploadsDir = Path.Combine(_webHostEnvironment.WebRootPath, "media/products");
+                    string imageName = Guid.NewGuid().ToString() + "_" + product.ImageUpload.FileName;
 
-        //            string filePath = Path.Combine(uploadsDir, imageName);
+                    string filePath = Path.Combine(uploadsDir, imageName);
 
-        //            FileStream fs = new FileStream(filePath, FileMode.Create);
-        //            await product.ImageUpload.CopyToAsync(fs);
-        //            fs.Close();
+                    FileStream fs = new FileStream(filePath, FileMode.Create);
+                    await product.ImageUpload.CopyToAsync(fs);
+                    fs.Close();
 
-        //            product.Image = imageName;
-        //        }
+                    product.Image = imageName;
+                }
 
-        //        _context.Update(product);
-        //        await _context.SaveChangesAsync();
+                _context.Update(product);
+                await _context.SaveChangesAsync();
 
-        //        TempData["Success"] = "The product has been edited!";
-        //    }
+                TempData["Success"] = "The product has been edited!";
+            }
 
-        //    return View(product);
-        //}
+            return View(product);
+        }
 
         //public async Task<IActionResult> Delete(long id)
         //{

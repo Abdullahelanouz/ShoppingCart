@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShoppingCart.Infrastructure;
 using ShoppingCart.Models;
+using System.Runtime.InteropServices;
 
 namespace ShoppingCart.Areas.Admin.Controllers
 {
 
     [Area("Admin")]
-    
+    [Authorize]
     public class ProductsController : Controller
     {
      

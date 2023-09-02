@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using ShoppingCart.Infrastructure.Validation;
 
 namespace ShoppingCart.Models
 {
@@ -27,5 +28,9 @@ namespace ShoppingCart.Models
         public Category Category { get; set; }
 
         public string Image { get; set; } = "noimage.png";
+
+        [NotMapped]
+        [FileExtension]
+        public IFormFile ImageUpload { get; set; }
     }
 }
